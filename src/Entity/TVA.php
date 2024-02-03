@@ -5,6 +5,9 @@ namespace App\Entity;
 use App\Repository\TVARepository;
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
+
 #[ORM\Entity(repositoryClass: TVARepository::class)]
 class TVA
 {
@@ -14,9 +17,12 @@ class TVA
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(min :1)]
+    #[Assert\NotBlank()]
     private ?string $libelle = null;
 
     #[ORM\Column]
+    #[Assert\PositiveOrZero]
     private ?float $valeur = null;
 
     public function getId(): ?int

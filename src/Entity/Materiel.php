@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\MaterielRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 #[ORM\Entity(repositoryClass: MaterielRepository::class)]
 class Materiel
 {
@@ -14,21 +16,27 @@ class Materiel
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(min :2)]
+    #[Assert\NotBlank()]
     private ?string $nom = null;
 
     #[ORM\Column]
+    #[Assert\Positive()]
     private ?float $prix_ht = null;
 
     #[ORM\Column(length: 255)]
     private ?string $TVA = null;
 
     #[ORM\Column]
+    #[Assert\Positive()]
     private ?float $prix_ttc = null;
 
     #[ORM\Column]
+    #[Assert\PositiveOrZero]
     private ?int $quantité = null;
 
     #[ORM\Column]
+    #[Assert\NotNull()]
     private ?\DateTimeImmutable $date_de_creation = null;
 
     public function getId(): ?int
