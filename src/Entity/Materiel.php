@@ -39,6 +39,11 @@ class Materiel
     #[Assert\NotNull()]
     private ?\DateTimeImmutable $date_de_creation = null;
 
+    public function __construct()
+    {
+        $this->date_de_creation = new \DateTimeImmutable();
+    }
+    
     public function getId(): ?int
     {
         return $this->id;
