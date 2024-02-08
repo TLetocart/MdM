@@ -1,0 +1,77 @@
+{# templates/materiel/edit.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier le matériel{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1>Modifier le matériel</h1>
+
+        <form id="materiel_form" {{ form_start(form) }}
+            <div class="form-group">
+                {{ form_label(form.nom, 'Nom') }}
+                {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.prix_ht, 'Prix HT') }}
+                {{ form_widget(form.prix_ht, {'attr': {'class': 'form-control', 'id': 'prix_ht'}}) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.TVA, 'TVA') }}
+                {{ form_widget(form.TVA, {'attr': {'class': 'form-control', 'id': 'tva'}}) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.prix_ht, 'Prix TTC') }}
+                {{ form_widget(form.prix_ttc, {'attr': {'class': 'form-control', 'id': 'prix_ttc'}}) }}
+
+            </div>
+            <div class="form-group">
+                {{ form_label(form.prix_ht, 'Quantité') }}
+                {{ form_widget(form.quantite, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <button type="submit" class="btn btn-primary">Modifier</button>
+        {{ form_end(form) }}
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+        // Fonction pour mettre à jour le prix HT en fonction du prix TTC
+        function updatePrixHT() {
+            var prixTTC = parseFloat(document.getElementById('materiel_prix_ttc').value);
+            var TVA = parseFloat(document.getElementById('materiel_TVA').value);
+            var prixHT = prixTTC / (1 + TVA);
+            document.getElementById('materiel_prix_ht').value = prixHT.toFixed(2);
+        }
+
+        // Événement pour mettre à jour le prix TTC lorsqu'on change la valeur du prix HT
+        document.getElementById('materiel_prix_ht').addEventListener('input', function() {
+            var prixHT = parseFloat(this.value);
+            var TVA = parseFloat(document.getElementById('materiel_TVA').value);
+            var prixTTC = prixHT * (1 + TVA);
+            document.getElementById('materiel_prix_ttc').value = prixTTC.toFixed(2);
+        });
+
+        // Événement pour mettre à jour le prix HT lorsqu'on change la valeur du prix TTC
+        document.getElementById('materiel_prix_ttc').addEventListener('input', function() {
+            updatePrixHT();
+        });
+
+        // Événement pour mettre à jour les prix HT et TTC lorsqu'on change la valeur de la TVA
+        document.getElementById('materiel_TVA').addEventListener('input', function() {
+            updatePrixHT();
+            // Appeler également la fonction pour mettre à jour le prix TTC
+            // puisque la TVA a changé et les prix TTC doivent être recalculés
+            var prixHT = parseFloat(document.getElementById('materiel_prix_ht').value);
+            var TVA = parseFloat(this.value);
+            var prixTTC = prixHT * (1 + TVA);
+            document.getElementById('materiel_prix_ttc').value = prixTTC.toFixed(2);
+        });
+
+        // Appel initial pour mettre à jour les prix HT et TTC au chargement de la page
+        updatePrixHT();
+    });
+
+    </script>
+
+{% endblock %}

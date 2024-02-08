@@ -33,7 +33,7 @@ class Materiel
 
     #[ORM\Column]
     #[Assert\PositiveOrZero]
-    private ?int $quantité = null;
+    private ?int $quantite = null;
 
     #[ORM\Column]
     #[Assert\NotNull()]
@@ -97,14 +97,14 @@ class Materiel
         return $this;
     }
 
-    public function getQuantité(): ?int
+    public function getQuantite(): ?int
     {
-        return $this->quantité;
+        return $this->quantite;
     }
 
-    public function setQuantité(int $quantité): static
+    public function setQuantite(int $quantite): static
     {
-        $this->quantité = $quantité;
+        $this->quantite = $quantite;
 
         return $this;
     }

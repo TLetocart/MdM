@@ -25,16 +25,16 @@ class AppFixtures extends Fixture
     {
         for ($i=1; $i <= 20 ; $i++) {
             $materiel = new Materiel();
-            $prixht = mt_rand(0, 50);
+            $prixht = mt_rand(1.0, 50.0);
             $tva = 0.20;
             $prixttc = $prixht * (1 + $tva);
-            $quantité = mt_rand(0, 10);
+            $quantite = mt_rand(0, 10);
 
             $materiel->setNom($this->faker->word())
                 ->setPrixht($prixht)
                 ->setTVA($tva)
                 ->setPrixTtc($prixttc)
-                ->setQuantité($quantité);
+                ->setQuantite($quantite);
 
             $manager->persist($materiel);
         }
